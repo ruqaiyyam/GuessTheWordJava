@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><title>Admin</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body><div class="wrap wide"><h1>Admin reports</h1>
+<h2>Daily report</h2>
+<form method="get" th:action="@{/admin}"><input type="date" name="date" th:value="${date}"><button type="submit">Show</button></form>
+<table><tr><th>Date</th><th>Number of users</th><th>Correct guesses</th></tr>
+<tr><td th:text="${daily.date()}"></td><td th:text="${daily.users()}"></td><td th:text="${daily.correctGuesses()}"></td></tr></table>
+<h2>User report</h2>
+<form method="get" th:action="@{/admin}"><input type="hidden" name="date" th:value="${date}">
+ <input type="text" name="username" placeholder="Username" th:value="${searched}"><button type="submit">Show</button></form>
+<p class="err" th:if="${userError}" th:text="${userError}"></p>
+<table th:if="${userReport}"><tr><th>Date</th><th>Words tried</th><th>Correct guesses</th></tr>
+<tr th:each="r : ${userReport}"><td th:text="${r.date()}"></td><td th:text="${r.wordsTried()}"></td><td th:text="${r.correctGuesses()}"></td></tr></table>
+<p><a th:href="@{/logout}">Logout</a></p></div></body></html>

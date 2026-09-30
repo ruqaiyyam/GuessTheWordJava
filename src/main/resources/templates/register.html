@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><title>Register</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body><div class="wrap"><h1>Register</h1>
+<p class="err" th:if="${error}" th:text="${error}"></p>
+<form method="post" th:action="@{/register}">
+ <input type="text" name="username" placeholder="Username" pattern="[A-Za-z]{5,}" required>
+ <div class="hint">At least 5 letters (A-Z, a-z).</div>
+ <input type="password" name="password" placeholder="Password" minlength="5" required>
+ <div class="hint">At least 5 characters with a letter, a digit and one of $ % * )</div>
+ <button type="submit">Create account</button>
+</form><p><a th:href="@{/login}">Back to login</a></p></div></body></html>

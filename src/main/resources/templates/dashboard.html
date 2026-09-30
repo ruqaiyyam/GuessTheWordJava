@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><title>Dashboard</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body><div class="wrap"><h1>Hello, <span th:text="${username}"></span></h1>
+<p class="err" th:if="${error}" th:text="${error}"></p>
+<p>Words remaining today: <b th:text="${remaining}"></b> (max 3 per day)</p>
+<form method="post" th:action="@{/game/start}" th:if="${remaining > 0 or hasOpen}">
+ <button type="submit" th:text="${hasOpen} ? 'Resume game' : 'Play'"></button>
+</form>
+<h3>Today's games</h3>
+<table><tr><th>#</th><th>Result</th><th></th></tr>
+<tr th:each="g, i : ${todays}"><td th:text="${i.count}"></td><td th:text="${g.status}"></td><td><a th:href="@{/game/{id}(id=${g.id})}">Open</a></td></tr></table>
+<p><a th:href="@{/logout}">Logout</a></p></div></body></html>

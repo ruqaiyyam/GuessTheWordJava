@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><title>Play</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body><div class="wrap"><h1>Guess the Word</h1>
+<p class="err" th:if="${error}" th:text="${error}"></p>
+<div class="board">
+ <div class="row" th:each="row : ${rows}"><div th:each="t : ${row}" th:class="'tile ' + ${t.css()}" th:text="${t.letter()}"></div></div>
+</div>
+<div th:unless="${over}">
+ <p>Guesses left: <b th:text="${attemptsLeft}"></b></p>
+ <form method="post" th:action="@{/game/{id}/guess(id=${game.id})}">
+  <input type="text" id="guess" name="guess" maxlength="5" pattern="[A-Z]{5}" autocomplete="off" autofocus required>
+  <button type="submit">Submit guess</button>
+ </form>
+</div>
+<p th:if="${over}">Game over. <a th:href="@{/dashboard}">Back to dashboard</a></p>
+<p th:unless="${over}"><a th:href="@{/dashboard}">Back to dashboard</a></p>
+</div>
+<script>
+ var gi=document.getElementById('guess');
+ if(gi){gi.addEventListener('input',function(){gi.value=gi.value.toUpperCase().replace(/[^A-Z]/g,'');});}
+</script>
+<script th:if="${finishMessage}" th:inline="javascript">
+ alert([[${finishMessage}]]);
+ window.location.href = [[@{/dashboard}]];
+</script>
+</body></html>
